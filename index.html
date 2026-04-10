@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAKT — Accountability with stakes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0c0c0c;
+            --surface: #141414;
+            --border: #1e1e1e;
+            --orange: #ff6400;
+            --text: #f0ede8;
+            --muted: #919191;
+            --dimmed: #555555;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'IBM Plex Mono', 'SF Mono', ui-monospace, monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* --- NAV --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 28px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--orange);
+        }
+
+        .nav-cta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            transition: border-color 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 28px 60px;
+        }
+
+        .hero-label {
+            margin-bottom: 14px;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 10vw, 72px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.95;
+        }
+
+        .hero-title span {
+            color: var(--orange);
+        }
+
+        .hero-rule {
+            width: 75px;
+            height: 2px;
+            background: var(--orange);
+            margin: 20px 0 28px;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 440px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 18px 40px;
+            background: var(--text);
+            color: var(--bg);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: background 0.2s ease;
+        }
+
+        .hero-cta:hover {
+            background: var(--orange);
+        }
+
+        /* --- DIVIDER --- */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* --- HOW IT WORKS --- */
+        .how-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 28px;
+        }
+
+        .how-section .mono {
+            color: var(--dimmed);
+            letter-spacing: 3px;
+            margin-bottom: 28px;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--orange);
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            color: var(--dimmed);
+            line-height: 1.5;
+        }
+
+        /* --- STAKES --- */
+        .stakes-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 28px;
+        }
+
+        .stakes-title {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .stakes-title span {
+            color: var(--orange);
+        }
+
+        .stakes-rule {
+            width: 50px;
+            height: 2px;
+            background: var(--orange);
+            margin: 16px 0 20px;
+        }
+
+        .stakes-sub {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: 36px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .card .mono {
+            margin-bottom: 10px;
+        }
+
+        .card h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .card p {
+            font-size: 12px;
+            color: var(--dimmed);
+            line-height: 1.5;
+        }
+
+        /* --- VERIFICATION --- */
+        .verify-section {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 28px;
+        }
+
+        .verify-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .verify-left .mono {
+            margin-bottom: 16px;
+        }
+
+        .verify-left h2 {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .verify-left h2 span { color: var(--orange); }
+
+        .verify-left .rule {
+            width: 50px;
+            height: 2px;
+            background: var(--orange);
+            margin: 16px 0 20px;
+        }
+
+        .verify-left p {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .verify-points {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-top: 8px;
+        }
+
+        .verify-point {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .verify-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            color: var(--orange);
+        }
+
+        .verify-point h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .verify-point p {
+            font-size: 12px;
+            color: var(--dimmed);
+            line-height: 1.4;
+        }
+
+        /* --- BOTTOM CTA --- */
+        .bottom-cta {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 28px;
+            text-align: center;
+        }
+
+        .bottom-cta h2 {
+            font-size: clamp(36px, 7vw, 56px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .bottom-cta h2 span { color: var(--orange); }
+
+        .bottom-cta .rule {
+            width: 50px;
+            height: 2px;
+            background: var(--orange);
+            margin: 20px auto 24px;
+        }
+
+        .bottom-cta p {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
+
+        .bottom-cta a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px 48px;
+            background: var(--orange);
+            color: var(--bg);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: opacity 0.2s ease;
+        }
+
+        .bottom-cta a:hover {
+            opacity: 0.85;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 28px 40px;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--dimmed);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            .verify-grid {
+                grid-template-columns: 1fr;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">PAKT</div>
+        <a href="#" class="nav-cta">Download</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <p class="mono hero-label">Accountability with stakes</p>
+        <h1 class="hero-title">MISS THE<br>WEEK.<br><span>PAY YOUR<br>CREW.</span></h1>
+        <div class="hero-rule"></div>
+        <p class="hero-sub">Form a group with friends. Set a weekly workout goal. Put real money on it. Hit your number or pay up.</p>
+        <a href="#" class="hero-cta">GET PAKT</a>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <span class="mono">How it works</span>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section">
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Form your crew</h3>
+                    <p>Create a Pakt and invite up to 6 friends with a simple code. Everyone joins in seconds.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Set your weekly goal</h3>
+                    <p>Choose 2-5 workouts per week. Pick an intensity level from easy to hard. Everyone commits to the same bar.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Put money on it</h3>
+                    <p>$5 to $50 per week. You choose the stakes. Enough to sting, not enough to stress.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Hit your goal or pay your crew</h3>
+                    <p>Miss your workouts? Your stake gets split among those who showed up. Verified by Apple Health. No self-reporting. No honor system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- REAL STAKES -->
+    <section class="stakes-section">
+        <p class="mono">Why it works</p>
+        <h2 class="stakes-title">REAL STAKES.<br><span>REAL RESULTS.</span></h2>
+        <div class="stakes-rule"></div>
+        <p class="stakes-sub">Motivation apps send you reminders. Pakt sends you a charge. There's a difference.</p>
+
+        <div class="cards">
+            <div class="card">
+                <p class="mono">Money talks</p>
+                <h4>Stakes you feel</h4>
+                <p>Put $5-$50 on the line every week. Miss your goal and your crew gets paid. Nothing motivates like your wallet.</p>
+            </div>
+            <div class="card">
+                <p class="mono">No faking it</p>
+                <h4>Verified workouts</h4>
+                <p>Workouts are pulled from Apple Health — duration, calories, heart rate. You either did it or you didn't.</p>
+            </div>
+            <div class="card">
+                <p class="mono">Your people</p>
+                <h4>Built for small groups</h4>
+                <p>Not a social network. Just you and 2-6 friends who actually hold each other accountable.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVIDER -->
+    <div class="divider">
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- VERIFICATION -->
+    <section class="verify-section">
+        <div class="verify-grid">
+            <div class="verify-left">
+                <p class="mono">The system</p>
+                <h2>NO HONOR<br><span>SYSTEM.</span></h2>
+                <div class="rule"></div>
+                <p>Every workout is verified through Apple Health data. Heart rate, duration, and calories — no check-ins, no selfies, no BS.</p>
+            </div>
+            <div class="verify-points">
+                <div class="verify-point">
+                    <div class="verify-icon">&#9829;</div>
+                    <div>
+                        <h4>Heart rate verified</h4>
+                        <p>Workouts must register real effort through heart rate zones.</p>
+                    </div>
+                </div>
+                <div class="verify-point">
+                    <div class="verify-icon">&#9201;</div>
+                    <div>
+                        <h4>Duration tracked</h4>
+                        <p>Minimum thresholds ensure real sessions, not accidental starts.</p>
+                    </div>
+                </div>
+                <div class="verify-point">
+                    <div class="verify-icon">&#9889;</div>
+                    <div>
+                        <h4>Calories counted</h4>
+                        <p>Active energy burn confirms you actually showed up and worked.</p>
+                    </div>
+                </div>
+                <div class="verify-point">
+                    <div class="verify-icon">&#10003;</div>
+                    <div>
+                        <h4>Automatic sync</h4>
+                        <p>Workouts appear in your Pakt as soon as they're recorded. No manual entry.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTTOM CTA -->
+    <section class="bottom-cta">
+        <h2>MAKE A<br><span>PAKT.</span></h2>
+        <div class="rule"></div>
+        <p>Stop promising. Start paying.</p>
+        <a href="#">DOWNLOAD PAKT</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Pakt. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
